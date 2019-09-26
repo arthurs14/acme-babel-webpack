@@ -1,4 +1,10 @@
-const { HashRouter, Link, NavLink, Route, Switch } = ReactRouterDOM;
+import React from 'react';
+import axios from 'axios';
+import ReactDOM from 'react-dom'
+import { HashRouter, Link, NavLink, Route, Switch } from 'react-router-dom';
+
+const { render } = ReactDOM;
+const { Component } = React;
 
 const People = ({ people })=> {
   return (
@@ -46,7 +52,7 @@ const Nav = ({ people, places, things })=> {
   );
 };
 
-class App extends React.Component{
+class App extends Component{
   constructor(){
     super();
     this.state = {
@@ -69,18 +75,19 @@ class App extends React.Component{
   }
 
   render(){
+    const { people, places, things } = this.state
     return (
       <HashRouter>
         <Route render={()=> <Nav { ...this.state }/>} />
         <div className='container'>
           <h1>Acme Nouns</h1>
-          <Route path='/people' render={()=> <People {...this.state}/>} />
-          <Route path='/places' render={()=> <Places {...this.state}/>} />
-          <Route path='/things' render={()=> <Things {...this.state}/>} />
+          <Route path='/people' render={()=> <People people={ people }/>} />
+          <Route path='/places' render={()=> <Places places={ places }/>} />
+          <Route path='/things' render={()=> <Things things={ things }/>} />
         </div>
       </HashRouter>
     );
   }
 }
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+render(<App />, document.querySelector('#root'));
