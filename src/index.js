@@ -3,6 +3,8 @@ import axios from 'axios';
 import ReactDOM from 'react-dom'
 import { HashRouter, Link, NavLink, Route, Switch } from 'react-router-dom';
 
+import Nav from './Nav';
+
 const { render } = ReactDOM;
 const { Component } = React;
 
@@ -36,22 +38,6 @@ const Things = ({ things })=> {
   );
 };
 
-
-const Nav = ({ people, places, things })=> {
-  const links = [
-    { text: 'People', to: '/people', count: people.length},
-    { text: 'Places', to: '/places', count: places.length },
-    { text: 'Things', to: '/things', count: things.length }
-  ];
-  return (
-    <nav>
-      {
-        links.map( link=> <NavLink key={ link.text } to={ link.to }>{ link.text }</NavLink>)
-      }
-    </nav>
-  );
-};
-
 class App extends Component{
   constructor(){
     super();
@@ -78,7 +64,7 @@ class App extends Component{
     const { people, places, things } = this.state
     return (
       <HashRouter>
-        <Route render={()=> <Nav { ...this.state }/>} />
+        <Route render={()=> <Nav people={people} places={places} things={things}/> } />
         <div className='container'>
           <h1>Acme Nouns</h1>
           <Route path='/people' render={()=> <People people={ people }/>} />
